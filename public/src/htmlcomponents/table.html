@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom DataTable</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        
+
+        
+    </style>
+</head>
+
+<body>
+
+    
+    <script>
+        
+
+        async function renderhtmltable(){
+            var tbl = `<div class="container1">
+                            <div id="table-header-menu" class="table-header-menu">
+                                <input type="text" id="search" class="search" placeholder="Search">
+                                <div id="table-header-buttons"></div>
+                            </div>
+
+                            <div class="table-container">
+                                <div class="table1">
+                                    
+                                    <div class="table-header" id="table-header">
+                                    </div>
+                                    <div id="table-body" class="table-body">
+                                        
+                                    </div>
+
+                                    <div id="no-data-message" style="display: none; padding: 5px; border-bottom: 1px solid #ddd; font-size:11px;">
+                                        No Data Found
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="pagination1">
+                                <button id="prev1" disabled>
+                                    <span class="material-symbols-outlined">
+                                        skip_previous
+                                    </span>
+                                </button>
+                                <span id="page-number">Page 1</span>
+                                <button id="next1">
+                                    <span class="material-symbols-outlined">
+                                        skip_next
+                                    </span>
+                                </button>
+                            </div>
+
+                            
+                            <div class="button-controls">
+                                <button id="move-to-start-left"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
+                                <button id="move-left"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                                <button id="move-right"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                                <button id="move-to-start-right"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
+                            </div>
+                        </div>`;
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

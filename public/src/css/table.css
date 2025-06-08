@@ -1,0 +1,322 @@
+.container1 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 150px);
+    padding: 20px 20px 0;
+
+}
+
+.search_table {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    font-size: 11px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 50%;
+}
+
+.search_table:focus {
+    outline: none;
+}
+
+.table-container {
+    flex-grow: 1;
+    overflow-y: hidden;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    /* For Firefox */
+    scrollbar-width: thin;
+    /* Makes the scrollbar thinner */
+    scrollbar-color: #888 #f1f1f1;
+    /* Thumb and track colors */
+}
+
+/* Webkit-based browsers (Chrome, Safari) */
+.table-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.table1 {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    display: table;
+}
+
+.table-header {
+    display: flex;
+    background-color: #f4f4f4;
+    padding: 0;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.header-column {
+    flex: 0 0 auto;
+    padding: 2px 5px;
+    font-size: 11px;
+    font-weight: 800;
+    position: relative;
+    border-right: 1px solid #ddd;
+}
+
+.table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-row {
+    display: flex;
+    /* padding: 5px 0; */
+    border-bottom: 1px solid #ddd;
+}
+
+.body-column {
+    flex: 0 0 auto;
+    padding: 2px 5px;
+    font-size: 11px;
+    border-right: 1px solid #ddd;
+}
+
+.pagination1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    position: relative;
+    top: -19px;
+}
+
+.pagination1 button {
+    padding: 0px;
+    margin: 0 10px;
+    cursor: pointer;
+    border: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.pagination1 button span {
+    padding-top: 3px;
+}
+
+.pagination1 button:disabled {
+    opacity: 0.5;
+}
+
+.pagination1 span {
+    margin: 0 10px;
+}
+
+.resizable1 {
+    width: 70px;
+}
+
+.resizable2 {
+    width: 90px;
+}
+
+.resizable3 {
+    width: 250px;
+}
+
+/* .resizable4,
+.resizable5,
+.resizable6,
+.resizable7,
+.resizable8,
+.resizable9,
+.resizable10,
+.resizable11,
+.resizable12,
+.resizable13,
+.resizable14,
+.resizable15,
+.resizable16,
+.resizable17,
+.resizable18,
+.resizable19,
+.resizable20 {
+    width: 150px;
+} */
+
+.header-column.sticky,
+.body-column.sticky {
+    position: sticky;
+    background-color: #f4f4f4;
+    left: 0;
+    z-index: 2;
+    border-right: 1px solid #ddd;
+}
+
+.header-column:nth-child(1){
+    text-transform: uppercase;
+
+}
+
+.header-column:nth-child(1),
+.body-column:nth-child(1) {
+    /*left: 0;*/
+    /*z-index: 3;*/
+}
+
+.header-column:nth-child(2),
+.body-column:nth-child(2) {
+    /*left: 70px;*/
+    /* Adjust based on the first column width */
+    z-index: 3;
+}
+
+.header-column:nth-child(3),
+.body-column:nth-child(3) {
+    /*left: 160px;*/
+    /* Adjust based on the first and second column widths */
+    /*z-index: 3;*/
+}
+
+.button-controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.button-controls button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+}
+
+.button-controls button:disabled {
+    opacity: 0.5;
+}
+
+.button-controls {
+    display: none;
+}
+
+.add_btn {
+    border: 0;
+    background-color: transparent;
+    /* margin-left: 5px; */
+}
+
+.add_btn img{
+    width: 36px;
+}
+
+.table-header-menu {
+    display: flex;
+    gap: 5px;
+}
+
+@media (max-width: 768px) {
+    .table1 {
+        display: flex;
+        border-left: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+    }
+
+    .header-column.sticky,
+    .body-column.sticky {
+        position: inherit;
+        background-color: transparent !important;
+        border-right: 0;
+        width: max-content !important;
+
+    }
+
+    .table-header {
+        display: block;
+        background-color: #fff;
+        position: sticky;
+        left: 0;
+        z-index: 9999;
+    }
+
+    .table-body {
+        display: inline-grid;
+        width: 100%;
+    }
+
+    .table-row {
+        display: grid;
+        width: 100%;
+        padding: 0;
+        border-left: 1px solid #ddd;
+    }
+
+    .table-row:not(:first-child) {
+        display: none;
+        /* Hide all rows except the first */
+    }
+
+    .resizable1,
+    .resizable2,
+    .resizable3,
+    .resizable4,
+    .resizable5 {
+        width: max-content;
+        border: 0 !important;
+        background-color: transparent !important;
+    }
+
+    .header-column:nth-child(2),
+    .body-column:nth-child(2),
+    .header-column:nth-child(3),
+    .body-column:nth-child(3) {
+        left: 0;
+    }
+
+    .body-column {
+        padding: 4px 10px;
+        border-right: none;
+    }
+
+    .pagination1 {
+        display: none;
+    }
+
+    .button-controls {
+        display: flex;
+    }
+}
+.freeze {
+    position: sticky;
+    position: -webkit-sticky;
+    background-color: lightgray;
+}
+
+th{
+    border-bottom:1px solid #ddd;
+}
+
+td{
+    border-bottom:1px solid #ddd;
+}
+.vertical{
+    writing-mode:sideways-lr;
+}

@@ -1,0 +1,360 @@
+@extends('shared.welcome')
+@section('content')
+
+<!-- Datatable plugin CSS file -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+<!-- jQuery library file -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<!-- Datatable plugin JS library file -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="/src/css/employee.css">
+
+<style>
+    .inventory {
+        font-family: "Ubuntu", sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 8px 50px;
+    }
+
+    .inventorylbl {
+        display: inline-block;
+        max-width: 100%;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .sub_form1 {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 61px;
+    }
+
+    .inventory_form {
+        background-color: transparent;
+        padding: 20px;
+
+    }
+
+    #hidden_div1 {
+        display: none;
+    }
+
+    #hidden_div2 {
+        display: none;
+    }
+
+    .material-icons {
+        font-size: 12px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="card2">
+            <div class="col-md-4">
+                <div class="card-header">
+                    <div class="main-icon">
+                        <span class="material-icons" style="font-size: 20px">
+                            inventory
+                        </span>
+                    </div>
+                    <h4>Inventory Form</h4>
+                </div>
+                <div class="card1">
+                    <form class="inventory_form" action="/store-inventory" method="post">
+                        @csrf
+                        <!-- Section 01 -->
+                        <div>
+                            <label class="inventorylbl">*Department</label>
+                            <select class="form-control" name="department" id="departmentId"
+                                onchange="showDiv('hidden_div1', this)" required>
+                                <option value="0">Select Department</option>
+                                <option>Information Technology</option>
+                                <option>Admin</option>
+                                <option>Human Resources</option>
+                                <option>Finance</option>
+                                <option>Front Office</option>
+                                <option>QSB 1</option>
+                                <option>Service Line</option>
+                                <option>QSB 2</option>
+                                <option>Bodyshop</option>
+                            </select>
+                        </div><br>
+
+                        <div>
+                            <div class="sub_form1" id="hidden_div1" style=" gap: 10px;">
+                                <div class="form-group" style="width: 40%;">
+                                    <label for="exampleInputEmail1">*Emp Number</label>
+                                    <input type="text" class="form-control" id="Eno" name="eno" onkeyup="nicCalc()"
+                                        maxlength=12 style="text-transform: uppercase; font-size: 11px;">
+                                </div>
+                                <div class="form-group" id="myDIV1" style="width: 30%">
+                                    <label for="exampleInputEmail1">*Emp Name</label>
+                                    <input type="text" class="form-control" id="Ename" name="ename" onkeyup="nicCalc()"
+                                        maxlength=12 style="font-size: 11px;">
+                                </div>
+                                <div class="form-group" id="myDIV1" style="width: 29%">
+                                    <label for="exampleInputEmail1">*Designation</label>
+                                    <input type="text" class="form-control" id="Designation" name="designation"
+                                        onkeyup="nicCalc()" maxlength=12 style="font-size: 11px;">
+                                </div>
+                            </div><br><br>
+                        </div>
+
+                        <!-- Section 02 -->
+                        <div>
+                            <label class="inventorylbl">*Type</label>
+                            <select class="form-control" name="type" id="typeId" onchange="showDiv('hidden_div2', this)"
+                                required>
+                                <option value="0">Select Type</option>
+                                <option>CPU</option>
+                                <option>Monitor</option>
+                                <option>Laptop</option>
+                                <option>UPS</option>
+                                <option>Mouse</option>
+                                <option>Key Board</option>
+                                <option>Printer</option>
+                            </select>
+                        </div><br>
+
+                        <div class="sub_form1" id="hidden_div2">
+                            <div class="form-group" id="myDIV1" style="width: 32%">
+                                <label for="exampleInputEmail1">*Brand</label>
+                                <input type="text" class="form-control" id="Brand" name="brand" onkeyup="nicCalc()"
+                                    maxlength=12 style="font-size: 11px;">
+                            </div>
+                            <div class="form-group" id="myDIV1" style="width: 32%">
+                                <label for="exampleInputEmail1">*Spec</label>
+                                <input type="text" class="form-control" id="Spec" name="spec" onkeyup="nicCalc()"
+                                    maxlength=12 style="font-size: 11px;">
+                            </div>
+                            <div class="form-group" id="myDIV1" style="width: 75%">
+                                <label for="exampleInputEmail1">*Warranty (Month)</label>
+                                <input type="text" class="form-control" id="Warranty" name="warranty"
+                                    onkeyup="nicCalc()" maxlength=12 style="font-size: 11px;">
+                            </div>
+                        </div>
+
+                        <!-- Form Button -->
+                        <button type="submit" class="create-user-btn">Submit</button><br><br><br>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-header">
+                    <div class="main-icon">
+                        <span class="material-icons" style="font-size: 20px">
+                            inventory
+                        </span>
+                    </div>
+                    <h4>Inventory Table</h4>
+                </div>
+                <div class="tbl-div" style="margin-top: 20px; width: 100%;">
+                    <table id="permision_id" class="display" style="width:100%">
+                        <thead id="theademployeetab">
+                            <tr>
+                                <th>Id</th>
+                                <th>Department</th>
+                                <th>Emp_No</th>
+                                <th>Emp Name</th>
+                                <th>Designation</th>
+                                <th>Type</th>
+                                <th>Brand</th>
+                                <th>Spec</th>
+                                <th>Warranty (Month)</th>
+                                <th>Uploads</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($inventoryData as $item)
+                            <tr data-id="{{ $item->id }}">
+                                <td>
+                                    {{ $item->id }}
+                                    <button type="button" onclick="enableEdit(this)" class="edit-btn">
+                                        <span class="material-icons">edit</span>
+                                    </button>
+                                </td>
+                                <td data-field="department">{{ $item->department }}</td>
+                                <td data-field="employeenumber" style="text-align: center">{{ $item->employeenumber }}
+                                </td>
+                                <td data-field="employeename">{{ $item->employeename }}</td>
+                                <td data-field="designation">{{ $item->designation }}</td>
+                                <td data-field="type">{{ $item->type }}</td>
+                                <td data-field="brand">{{ $item->brand }}</td>
+                                <td data-field="spec">{{ $item->spec }}</td>
+                                <td data-field="warranty" style="text-align: center">{{ $item->warranty }}</td>
+                                <td data-field="upload">
+                                    <input type="file" accept="image/*" style="display: none;"
+                                        onchange="uploadFile(this)" />
+                                    <button type="button" onclick="triggerFileInput(this)" class="upload-btn">
+                                        <span class="material-icons"
+                                            style="font-size: 17px; color: {{ $item->upload_path ? '#28a745' : '#999' }}">
+                                            upload_file
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./src/js/permission.js"></script>
+<script>
+    const departmentOptions = [
+        'Information Technology',
+        'Admin',
+        'Human Resources',
+        'Finance',
+        'Front Office',
+        'QSB 1',
+        'Service Line',
+        'QSB 2',
+        'Bodyshop'
+    ];
+
+    const typeOptions = [
+        'CPU',
+        'Monitor',
+        'Laptop',
+        'UPS',
+        'Mouse',
+        'Key Board',
+        'Printer'
+    ];
+
+    function showDiv(divId, element) {
+        document.getElementById(divId).style.display = element.value !== 'None' ? 'flex' : 'none';
+    }
+
+    function enableEdit(button) {
+        const row = button.closest('tr');
+        button.style.display = 'none';
+
+        let hasChanges = false;
+
+    row.querySelectorAll('td[data-field]').forEach(td => {
+        const val = td.innerText.trim();
+        const field = td.dataset.field;
+
+        if (field === 'upload') return;
+
+        let inputElement;
+
+        if (field === 'department') {
+            inputElement = `<select name="${field}" class="form-control" style="font-size:11px;">
+                ${departmentOptions.map(opt => `<option value="${opt}" ${opt === val ? 'selected' : ''}>${opt}</option>`).join('')}
+            </select>`;
+        } else if (field === 'type') {
+            inputElement = `<select name="${field}" class="form-control" style="font-size:11px;">
+                ${typeOptions.map(opt => `<option value="${opt}" ${opt === val ? 'selected' : ''}>${opt}</option>`).join('')}
+            </select>`;
+        } else {
+            inputElement = `<input type="text" name="${field}" value="${val}" class="form-control" style="font-size:11px;">`;
+        }
+
+        td.innerHTML = inputElement;
+    });
+
+
+        const inputs = row.querySelectorAll('input, select');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', () => hasChanges = true);
+            input.addEventListener('change', () => hasChanges = true);
+
+            input.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (hasChanges) {
+                        saveRow(row);
+                        hasChanges = false;
+                    }
+                }
+            });
+        });
+
+        row.addEventListener('focusout', () => {
+            setTimeout(() => {
+                if (!row.contains(document.activeElement)) {
+                    if (hasChanges) {
+                        saveRow(row);
+                        hasChanges = false;
+                    }
+                }
+            }, 100);
+        });
+    }
+
+    function saveRow(row) {
+        const id = row.dataset.id;
+        const inputs = row.querySelectorAll('input, select');
+        const data = { id };
+
+        inputs.forEach(input => data[input.name] = input.value);
+
+        fetch('/update-inventory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json()).then(res => {
+            if (res.success) {
+                inputs.forEach(input => {
+                    const td = input.parentElement;
+                    td.innerText = input.value;
+                });
+                row.querySelector('.edit-btn').style.display = 'inline-block';
+            } else {
+                alert("Update failed");
+            }
+        });
+    }
+
+    function triggerFileInput(button) {
+        const fileInput = button.parentElement.querySelector('input[type="file"]');
+        fileInput.click();
+    }
+
+    function uploadFile(input) {
+        const file = input.files[0];
+        if (!file) return;
+
+        const row = input.closest('tr');
+        const id = row.dataset.id;
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('id', id);
+        formData.append('_token', '{{ csrf_token() }}');
+
+        fetch('/upload-inventory-file', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.success) {
+                alert('File uploaded successfully!');
+            } else {
+                alert('Upload failed!');
+            }
+        })
+        .catch(() => alert('Upload error.'));
+    }
+</script>
+
+@endsection
