@@ -12,48 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="/src/css/employee.css">
-
-<style>
-    .inventory {
-        font-family: "Ubuntu", sans-serif;
-        font-size: 11px;
-        font-weight: 500;
-        padding: 8px 50px;
-    }
-
-    .inventorylbl {
-        display: inline-block;
-        max-width: 100%;
-        font-size: 11px;
-        font-weight: 700;
-    }
-
-    .sub_form1 {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        gap: 61px;
-    }
-
-    .inventory_form {
-        background-color: transparent;
-        padding: 20px;
-
-    }
-
-    #hidden_div1 {
-        display: none;
-    }
-
-    #hidden_div2 {
-        display: none;
-    }
-
-    .material-icons {
-        font-size: 12px;
-    }
-</style>
+<link rel="stylesheet" href="/src/css/home.css">
 
 <div class="container-fluid">
     <div class="row">
@@ -76,15 +35,18 @@
                             <select class="form-control" name="department" id="departmentId"
                                 onchange="showDiv('hidden_div1', this)" required>
                                 <option value="0">Select Department</option>
-                                <option>Information Technology</option>
+                                <option>IT</option>
                                 <option>Admin</option>
                                 <option>Human Resources</option>
                                 <option>Finance</option>
-                                <option>Front Office</option>
-                                <option>QSB 1</option>
-                                <option>Service Line</option>
-                                <option>QSB 2</option>
-                                <option>Bodyshop</option>
+                                <option>Customer Relations CC</option>
+                                <option>Operation SL</option>
+                                <option>Operation QSB</option>
+                                <option>Operation HSB</option>
+                                <option>Operation B&P (H&L)</option>
+                                <option>Operation B&P (M)</option>
+                                <option>Sales & Marketing</option>
+                                <option>Supply Chain Proc</option>
                             </select>
                         </div><br>
 
@@ -98,12 +60,12 @@
                                 <div class="form-group" id="myDIV1" style="width: 30%">
                                     <label for="exampleInputEmail1">*Emp Name</label>
                                     <input type="text" class="form-control" id="Ename" name="ename" onkeyup="nicCalc()"
-                                        maxlength=12 style="font-size: 11px;">
+                                        style="font-size: 11px;">
                                 </div>
                                 <div class="form-group" id="myDIV1" style="width: 29%">
                                     <label for="exampleInputEmail1">*Designation</label>
                                     <input type="text" class="form-control" id="Designation" name="designation"
-                                        onkeyup="nicCalc()" maxlength=12 style="font-size: 11px;">
+                                        onkeyup="nicCalc()" style="font-size: 11px;">
                                 </div>
                             </div><br><br>
                         </div>
@@ -128,22 +90,22 @@
                             <div class="form-group" id="myDIV1" style="width: 32%">
                                 <label for="exampleInputEmail1">*Brand</label>
                                 <input type="text" class="form-control" id="Brand" name="brand" onkeyup="nicCalc()"
-                                    maxlength=12 style="font-size: 11px;">
+                                    style="font-size: 11px;">
                             </div>
                             <div class="form-group" id="myDIV1" style="width: 32%">
                                 <label for="exampleInputEmail1">*Spec</label>
                                 <input type="text" class="form-control" id="Spec" name="spec" onkeyup="nicCalc()"
-                                    maxlength=12 style="font-size: 11px;">
+                                    style="font-size: 11px;">
                             </div>
                             <div class="form-group" id="myDIV1" style="width: 75%">
                                 <label for="exampleInputEmail1">*Warranty (Month)</label>
                                 <input type="text" class="form-control" id="Warranty" name="warranty"
-                                    onkeyup="nicCalc()" maxlength=12 style="font-size: 11px;">
+                                    onkeyup="nicCalc()" maxlength=6 style="font-size: 11px;">
                             </div>
                         </div>
 
                         <!-- Form Button -->
-                        <button type="submit" class="create-user-btn">Submit</button><br><br><br>
+                        <button type="submit" class="create-user-btn">Submit</button>
                     </form>
                 </div>
             </div>
@@ -211,17 +173,21 @@
 </div>
 
 <script src="./src/js/permission.js"></script>
+
 <script>
     const departmentOptions = [
-        'Information Technology',
+        'IT',
         'Admin',
         'Human Resources',
         'Finance',
-        'Front Office',
-        'QSB 1',
-        'Service Line',
-        'QSB 2',
-        'Bodyshop'
+        'Customer Relations CC',
+        'Operation SL',
+        'Operation QSB',
+        'Operation HSB',
+        'Operation B&P (H&L)',
+        'Operation B&P (M)',
+        'Sales & Marketing',
+        'Supply Chain Proc'
     ];
 
     const typeOptions = [
@@ -244,29 +210,28 @@
 
         let hasChanges = false;
 
-    row.querySelectorAll('td[data-field]').forEach(td => {
-        const val = td.innerText.trim();
-        const field = td.dataset.field;
+        row.querySelectorAll('td[data-field]').forEach(td => {
+            const val = td.innerText.trim();
+            const field = td.dataset.field;
 
-        if (field === 'upload') return;
+            if (field === 'upload') return;
 
-        let inputElement;
+            let inputElement;
 
-        if (field === 'department') {
-            inputElement = `<select name="${field}" class="form-control" style="font-size:11px;">
-                ${departmentOptions.map(opt => `<option value="${opt}" ${opt === val ? 'selected' : ''}>${opt}</option>`).join('')}
-            </select>`;
-        } else if (field === 'type') {
-            inputElement = `<select name="${field}" class="form-control" style="font-size:11px;">
-                ${typeOptions.map(opt => `<option value="${opt}" ${opt === val ? 'selected' : ''}>${opt}</option>`).join('')}
-            </select>`;
-        } else {
-            inputElement = `<input type="text" name="${field}" value="${val}" class="form-control" style="font-size:11px;">`;
-        }
+            if (field === 'department') {
+                inputElement = `<select name="${field}" class="form-control" style="font-size:11px;">
+                    ${departmentOptions.map(opt => `<option value="${opt}" ${opt === val ? 'selected' : ''}>${opt}</option>`).join('')}
+                </select>`;
+            } else if (field === 'type') {
+                inputElement = `<select name="${field}" class="form-control" style="font-size:11px;">
+                    ${typeOptions.map(opt => `<option value="${opt}" ${opt === val ? 'selected' : ''}>${opt}</option>`).join('')}
+                </select>`;
+            } else {
+                inputElement = `<input type="text" name="${field}" value="${val}" class="form-control" style="font-size:11px;">`;
+            }
 
-        td.innerHTML = inputElement;
-    });
-
+            td.innerHTML = inputElement;
+        });
 
         const inputs = row.querySelectorAll('input, select');
 
@@ -356,5 +321,6 @@
         .catch(() => alert('Upload error.'));
     }
 </script>
+
 
 @endsection

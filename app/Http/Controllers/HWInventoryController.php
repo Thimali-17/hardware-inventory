@@ -37,7 +37,7 @@ class HWInventoryController
     public function ShowInventory()
     {
         $inventoryData = hwinventory::all();
-        return view('pages.login', compact('inventoryData'));
+        return view('pages.home', compact('inventoryData'));
     }
 
 
