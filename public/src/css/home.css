@@ -22,7 +22,6 @@
     .inventory_form {
         background-color: transparent;
         padding: 20px;
-
     }
 
     #hidden_div1 {
@@ -35,4 +34,5 @@
 
     .material-icons {
         font-size: 12px;
+        cursor: pointer;
     }

@@ -123,6 +123,7 @@
                         <thead id="theademployeetab">
                             <tr>
                                 <th>Id</th>
+                                <th>Action</th>
                                 <th>Department</th>
                                 <th>Emp_No</th>
                                 <th>Emp Name</th>
@@ -139,10 +140,20 @@
                             <tr data-id="{{ $item->id }}">
                                 <td>
                                     {{ $item->id }}
-                                    <button type="button" onclick="enableEdit(this)" class="edit-btn">
-                                        <span class="material-icons">edit</span>
-                                    </button>
                                 </td>
+
+                                <td>
+                                    <div onclick="enableEdit(this)" class="edit-btn">
+                                        <span class="material-icons">edit</span>
+                                    </div>
+
+                                    <div onclick="enableVisible(this)" class="visible-btn">
+                                        <span class="material-icons" style="margin-left: 20px;">
+                                            visibility
+                                        </span>
+                                    </div>
+                                </td>
+
                                 <td data-field="department">{{ $item->department }}</td>
                                 <td data-field="employeenumber" style="text-align: center">{{ $item->employeenumber }}
                                 </td>
@@ -155,12 +166,12 @@
                                 <td data-field="upload">
                                     <input type="file" accept="image/*" style="display: none;"
                                         onchange="uploadFile(this)" />
-                                    <button type="button" onclick="triggerFileInput(this)" class="upload-btn">
+                                    <div type="button" onclick="triggerFileInput(this)" class="upload-btn">
                                         <span class="material-icons"
                                             style="font-size: 17px; color: {{ $item->upload_path ? '#28a745' : '#999' }}">
                                             upload_file
                                         </span>
-                                    </button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

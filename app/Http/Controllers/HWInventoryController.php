@@ -40,7 +40,6 @@ class HWInventoryController
         return view('pages.home', compact('inventoryData'));
     }
 
-
     public function updateInventory(Request $request)
     {
         $inventory = hwinventory::find($request->id);
@@ -61,36 +60,36 @@ class HWInventoryController
         return response()->json(['success' => true]);
     }
 
-   public function uploadInventoryFile(Request $request)
-{
-  
-    $request->validate([
-        'id' => 'required|exists:hwinventories,id',
-        'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048'
-    ]);
+    public function uploadInventoryFile(Request $request)
+    {
 
-    $inventory = hwinventory::find($request->id);
+        $request->validate([
+            'id' => 'required|exists:hwinventories,id',
+            'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048'
+        ]);
 
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
+        $inventory = hwinventory::find($request->id);
 
-        $path = $file->store('inventory_uploads', 'public');
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
 
-        $inventory->upload_path = $path;
-        $inventory->save();
+            $path = $file->store('inventory_uploads', 'public');
+
+            $inventory->upload_path = $path;
+            $inventory->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'File uploaded successfully.',
+                'path' => $path
+            ]);
+        }
 
         return response()->json([
-            'success' => true,
-            'message' => 'File uploaded successfully.',
-            'path' => $path
+            'success' => false,
+            'message' => 'No file uploaded.'
         ]);
     }
-
-    return response()->json([
-        'success' => false,
-        'message' => 'No file uploaded.'
-    ]);
-}
 
 }
 
