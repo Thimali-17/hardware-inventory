@@ -14,6 +14,13 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="/src/css/home.css">
 
+<!-- Bootstrap CSS -->
+{{--
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --}}
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 <div class="container-fluid">
     <div class="row">
         <div class="card2">
@@ -143,14 +150,17 @@
                                 </td>
 
                                 <td>
-                                    <div onclick="enableEdit(this)" class="edit-btn">
-                                        <span class="material-icons">edit</span>
-                                    </div>
+                                    <div style="display: flex; align-items: center;">
+                                        <div onclick="enableEdit(this)" class="edit-btn"
+                                            style="cursor: pointer; margin-right: 10px;">
+                                            <span class="material-icons">edit</span>
+                                        </div>
 
-                                    <div onclick="enableVisible(this)" class="visible-btn">
-                                        <span class="material-icons" style="margin-left: 20px;">
-                                            visibility
-                                        </span>
+                                        <div onclick="enableVisible(this)" class="visible-btn" style="cursor: pointer;">
+                                            <span class="material-icons">
+                                                visibility
+                                            </span>
+                                        </div>
                                     </div>
                                 </td>
 
@@ -183,9 +193,87 @@
     </div>
 </div>
 
+
+<!-- View Modal -->
+<div class="modal fade" id="viewInventoryModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="padding: 20px;">
+            <div class="modal-header">
+                <div class="main-icon">
+                    <span class="material-icons" style="font-size: 20px">
+                        inventory
+                    </span>
+                </div>
+                <h4 style="margin-left: 20px">Inventory Table</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="$('#viewInventoryModal').modal('hide')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>Department</th>
+                            <td id="view_department"></td>
+                        </tr>
+                        <tr>
+                            <th>Emp Number</th>
+                            <td id="view_employeenumber"></td>
+                        </tr>
+                        <tr>
+                            <th>Emp Name</th>
+                            <td id="view_employeename"></td>
+                        </tr>
+                        <tr>
+                            <th>Designation</th>
+                            <td id="view_designation"></td>
+                        </tr>
+                        <tr>
+                            <th>Type</th>
+                            <td id="view_type"></td>
+                        </tr>
+                        <tr>
+                            <th>Brand</th>
+                            <td id="view_brand"></td>
+                        </tr>
+                        <tr>
+                            <th>Spec</th>
+                            <td id="view_spec"></td>
+                        </tr>
+                        <tr>
+                            <th>Warranty</th>
+                            <td id="view_warranty"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script src="./src/js/permission.js"></script>
 
 <script>
+    function enableVisible(button) {
+    const row = button.closest('tr');
+
+    document.getElementById('view_department').innerText = row.querySelector('[data-field="department"]').innerText.trim();
+    document.getElementById('view_employeenumber').innerText = row.querySelector('[data-field="employeenumber"]').innerText.trim();
+    document.getElementById('view_employeename').innerText = row.querySelector('[data-field="employeename"]').innerText.trim();
+    document.getElementById('view_designation').innerText = row.querySelector('[data-field="designation"]').innerText.trim();
+    document.getElementById('view_type').innerText = row.querySelector('[data-field="type"]').innerText.trim();
+    document.getElementById('view_brand').innerText = row.querySelector('[data-field="brand"]').innerText.trim();
+    document.getElementById('view_spec').innerText = row.querySelector('[data-field="spec"]').innerText.trim();
+    document.getElementById('view_warranty').innerText = row.querySelector('[data-field="warranty"]').innerText.trim();
+
+    $('#viewInventoryModal').modal('show');
+}
+
+
     const departmentOptions = [
         'IT',
         'Admin',
