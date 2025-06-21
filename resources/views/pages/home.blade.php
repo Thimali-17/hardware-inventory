@@ -93,23 +93,26 @@
                             </select>
                         </div><br>
 
-                        <div class="sub_form1" id="hidden_div2">
+                         <div class="sub_form1" id="hidden_div2">
                             <div class="form-group" id="myDIV1" style="width: 32%">
                                 <label for="exampleInputEmail1">*Brand</label>
                                 <input type="text" class="form-control" id="Brand" name="brand" onkeyup="nicCalc()"
                                     style="font-size: 11px;">
                             </div>
-                            <div class="form-group" id="myDIV1" style="width: 32%">
-                                <label for="exampleInputEmail1">*Spec</label>
-                                <input type="text" class="form-control" id="Spec" name="spec" onkeyup="nicCalc()"
-                                    style="font-size: 11px;">
-                            </div>
-                            <div class="form-group" id="myDIV1" style="width: 75%">
+                           
+                            <div class="form-group" id="myDIV1" style="width: 60%">
                                 <label for="exampleInputEmail1">*Warranty (Month)</label>
                                 <input type="text" class="form-control" id="Warranty" name="warranty"
                                     onkeyup="nicCalc()" maxlength=6 style="font-size: 11px;">
                             </div>
+
+                               <div class="form-group" id="myDIV1" style="width: 50%">
+                                <label for="Spec">*Spec</label>
+                                <textarea class="form-control" id="Spec" name="spec" onkeyup="nicCalc()"
+                                    style="font-size: 11px; margin-top: 2px;"></textarea>
+                            </div>
                         </div>
+
 
                         <!-- Form Button -->
                         <button type="submit" class="create-user-btn">Submit</button>
@@ -173,7 +176,7 @@
                                 <td data-field="brand">{{ $item->brand }}</td>
                                 <td data-field="spec">{{ $item->spec }}</td>
                                 <td data-field="warranty" style="text-align: center">{{ $item->warranty }}</td>
-                                <td data-field="upload">
+                                <td data-field="upload" data-upload-path="{{ $item->upload_path }}">
                                     <input type="file" accept="image/*" style="display: none;"
                                         onchange="uploadFile(this)" />
                                     <div type="button" onclick="triggerFileInput(this)" class="upload-btn">
@@ -183,6 +186,7 @@
                                         </span>
                                     </div>
                                 </td>
+
                             </tr>
                             @endforeach
                         </tbody>
@@ -211,40 +215,48 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
+            <!-- New Row with Emp Info -->
+            <div class="row" style="padding: 0 20px 20px 20px; font-size: 12px;">
+                <div class="col-md-3"><strong>Department</strong> <br><span id="view_department"></span></div>
+                <div class="col-md-3"><strong>Emp Number</strong><br> <span id="view_employeenumber"></span></div>
+                <div class="col-md-3"><strong>Emp Name</strong> <br><span id="view_employeename"></span></div>
+                <div class="col-md-3"><strong>Designation</strong><br> <span id="view_designation"></span></div>
+            </div>
+
             <div class="modal-body">
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="font-size: 12px; table-layout: fixed; width: 100%;">
                     <tbody>
                         <tr>
-                            <th>Department</th>
-                            <td id="view_department"></td>
-                        </tr>
-                        <tr>
-                            <th>Emp Number</th>
-                            <td id="view_employeenumber"></td>
-                        </tr>
-                        <tr>
-                            <th>Emp Name</th>
-                            <td id="view_employeename"></td>
-                        </tr>
-                        <tr>
-                            <th>Designation</th>
-                            <td id="view_designation"></td>
-                        </tr>
-                        <tr>
-                            <th>Type</th>
+                            <th style="width: 25%;">Type</th>
                             <td id="view_type"></td>
                         </tr>
                         <tr>
-                            <th>Brand</th>
+                            <th style="width: 25%;">Brand</th>
                             <td id="view_brand"></td>
                         </tr>
                         <tr>
-                            <th>Spec</th>
+                            <th style="width: 25%;">Spec</th>
                             <td id="view_spec"></td>
                         </tr>
                         <tr>
-                            <th>Warranty</th>
+                            <th style="width: 25%;">Warranty</th>
                             <td id="view_warranty"></td>
+                        </tr>
+                        <tr>
+                            <th style="width: 25%;">Image</th>
+                            <td id="img">
+                                <div class="row" style="padding: 0 20px 20px 0;">
+                                    <div class="col-md-4">
+                                        <div id="inventory-image-box"
+                                            style="width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; background-color: #f9f9f9;">
+                                            <span class="material-icons" style="font-size: 80px; color: #c2bfbf;">
+                                                image
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -252,7 +264,6 @@
         </div>
     </div>
 </div>
-
 
 
 <script src="./src/js/permission.js"></script>
@@ -270,9 +281,36 @@
     document.getElementById('view_spec').innerText = row.querySelector('[data-field="spec"]').innerText.trim();
     document.getElementById('view_warranty').innerText = row.querySelector('[data-field="warranty"]').innerText.trim();
 
+    // Get image path and preview
+    const uploadTd = row.querySelector('[data-field="upload"]');
+    const path = uploadTd.dataset.uploadPath;
+    if (path) {
+        setInventoryImage(`/storage/${path}`);
+    } else {
+        setInventoryImage(null); 
+    }
+
     $('#viewInventoryModal').modal('show');
 }
 
+
+// function setInventoryImage(imageUrl) {
+//     const box = document.getElementById('inventory-image-box');
+//     if (imageUrl) {
+//         box.innerHTML = `<img src="${imageUrl}" alt="Inventory Image" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+//     } else {
+//         box.innerHTML = `<span class="material-icons" style="font-size: 80px; color: #aaa;">image</span>`;
+//     }
+// }
+
+// if (res.success) {
+//     alert('File uploaded successfully!');
+
+//     const uploadTd = input.closest('td');
+//     uploadTd.dataset.uploadPath = res.path; 
+
+//     uploadTd.querySelector('.material-icons').style.color = '#28a745';
+// }
 
     const departmentOptions = [
         'IT',
@@ -419,6 +457,27 @@
         })
         .catch(() => alert('Upload error.'));
     }
+
+
+    
+function setInventoryImage(imageUrl) {
+    const box = document.getElementById('inventory-image-box');
+    if (imageUrl) {
+        box.innerHTML = `<img src="${imageUrl}" alt="Inventory Image" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+    } else {
+        box.innerHTML = `<span class="material-icons" style="font-size: 80px; color: #aaa;">image</span>`;
+    }
+}
+
+if (res.success) {
+    alert('File uploaded successfully!');
+
+    const uploadTd = input.closest('td');
+    uploadTd.dataset.uploadPath = res.path; 
+
+    uploadTd.querySelector('.material-icons').style.color = '#28a745';
+}
+
 </script>
 
 
